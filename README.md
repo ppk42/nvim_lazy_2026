@@ -28,9 +28,12 @@ eine ausgewählte Datei in einem neuen Neovim-Tab geöffnet.
 
 ### Tabs
 
-Die Tab-Leiste zeigt Tab-Nummern und Dateinamen ohne Verzeichnispfad.
-Im Normalmodus wechselt `<Tab>` zum nächsten Tab; `<C-I>` geht
-weiterhin in der Sprungliste vorwärts.
+Links zeigt die Leiste geladene Datei-Buffer. Auch durch LSP-Rename
+geänderte, nicht gelistete Buffer erscheinen dort mit `●`. Ein Klick
+wählt den Buffer; `<leader>c` schließt den aktiven Buffer und fragt bei
+ungespeicherten Änderungen nach. Rechts stehen die echten Neovim-Tabs
+mit Nummer und Dateinamen ohne Verzeichnispfad. Im Normalmodus wechselt
+`<Tab>` zum nächsten Tab; `<C-I>` geht in der Sprungliste vorwärts.
 
 ## LSP, Vervollständigung und Snippets
 

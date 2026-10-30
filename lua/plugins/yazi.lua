@@ -11,7 +11,7 @@ return {
         return
       end
 
-      vim.cmd.tabedit(vim.fn.fnameescape(chosen_file))
+      vim.cmd.edit(vim.fn.fnameescape(chosen_file))
     end,
   },
 }

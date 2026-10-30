@@ -5,12 +5,25 @@ vim.keymap.set("n", "<leader>-", "<cmd>Yazi<cr>", {
 	desc = "Yazi-Dateibrowser öffnen",
 })
 
-vim.keymap.set("n", "<Tab>", "<cmd>tabnext<cr>", {
-	desc = "Zum nächsten Tab wechseln",
+vim.keymap.set("n", "<Tab>", function()
+	vim.cmd.bnext()
+end, {
+	desc = "Zum nächsten Buffer-Tab wechseln",
+})
+vim.keymap.set("n", "<S-Tab>", function()
+	vim.cmd.bprevious()
+end, {
+	desc = "Zum vorherigen Buffer-Tab wechseln",
 })
 vim.keymap.set("n", "<C-I>", "<C-I>", {
 	desc = "In der Sprungliste vorwärts gehen",
 	noremap = true,
+})
+
+vim.keymap.set("n", "<leader>c", function()
+	vim.cmd("confirm bdelete")
+end, {
+	desc = "Aktuellen Buffer schließen",
 })
 
 vim.api.nvim_create_autocmd("FileType", {
