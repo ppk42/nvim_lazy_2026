@@ -1,0 +1,15 @@
+vim.opt.expandtab = true
+vim.opt.tabstop = 3
+vim.opt.shiftwidth = 3
+vim.opt.softtabstop = 3
+vim.opt.wrap = false
+vim.opt.textwidth = 78
+vim.opt.formatoptions:remove({
+  "t",
+  "c",
+})
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.signcolumn = "yes"
+vim.opt.showtabline = 2
+vim.opt.laststatus = 3
