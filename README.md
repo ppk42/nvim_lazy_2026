@@ -13,8 +13,11 @@ dokumentiert.
 - `toggleterm.nvim`: Terminals direkt in Neovim.
 - `telescope.nvim`: Fuzzy-Suche in Dateien, Buffer, Hilfe, Text, Git und mehr.
 - `todo-comments.nvim`: TODO-Kommentare mit Telescope durchsuchen.
-- `nvim-dap`, `nvim-dap-python` und `nvim-dap-ui`: Python-Debugging.
-- `mason-nvim-dap.nvim`: Installiert `debugpy` für den Python-Debugger.
+- `nvim-dap`, `nvim-dap-python` und `nvim-dap-ui`: Python- und
+  JavaScript-Debugging.
+- `mason-nvim-dap.nvim`: Installiert `debugpy` und `js-debug-adapter`.
+- `nvim-dap-vscode-js`: Node.js- und Chrome-Debugging für JavaScript,
+  TypeScript und React.
 - `plenary.nvim`: Abhängigkeit von `yazi.nvim` und `telescope.nvim`.
 - `which-key.nvim`: Zeigt mögliche Folgetasten nach dem Leader an.
 - `lazygit.nvim`: Öffnet die Git-Oberfläche LazyGit mit `<leader>gl`.
@@ -23,8 +26,11 @@ dokumentiert.
 - `mason-lspconfig.nvim`: Verbindet Mason mit Neovims LSP.
 - `nvim-lspconfig`: Stellt die LSP-Konfigurationen bereit.
 - `nvim-cmp` und `cmp-nvim-lsp`: Manuell aufgerufene LSP-Vervollständigung.
-- `LuaSnip`, `cmp_luasnip` und `friendly-snippets`: Snippets für Python
-  und Lua, die nur nach Auswahl eingefügt werden.
+- `LuaSnip`, `cmp_luasnip` und `friendly-snippets`: Snippets für Python,
+  Lua, JavaScript, TypeScript und React, die nur nach Auswahl eingefügt
+  werden.
+- `tsc.nvim`: TypeScript-Projektprüfungen mit `<leader>lT`.
+- `package-info.nvim`: Versionsinformationen und Aktionen in `package.json`.
 - `heirline.nvim` und `nvim-web-devicons`: Status- und Tab-Leiste.
 
 ### Yazi
@@ -50,8 +56,10 @@ mit Nummer und Dateinamen ohne Verzeichnispfad. Im Normalmodus wechselt
 
 ## LSP, Vervollständigung und Snippets
 
-Mason installiert `pyright` für Python und `lua_ls` für Lua beim
-ersten Öffnen einer Datei automatisch. Vorschläge erscheinen nur nach
+Mason installiert `pyright` für Python, `lua_ls` für Lua und `vtsls` für
+JavaScript und TypeScript beim ersten Öffnen einer Datei automatisch.
+VTSLS aktiviert Inlay-Hints und aktualisiert Imports nach Datei-Umzügen.
+Vorschläge erscheinen nur nach
 `<C-Space>`.
 Mit `<Tab>` und `<S-Tab>` wird ein Vorschlag gewählt oder zwischen
 Snippet-Platzhaltern gewechselt. `<CR>` übernimmt nur einen gewählten
@@ -83,6 +91,18 @@ Im Visual-Modus wertet `<leader>dE` die Auswahl aus. Mason installiert
 `debugpy` automatisch.
 F5 setzt das Debugging fort.
 In DAP-Bereichen ändern Ctrl-Pfeiltasten die Fenstergröße.
+
+## JavaScript- und TypeScript-Debugging
+
+In JavaScript-, TypeScript- und React-Dateien öffnet `<leader>dc` die
+Konfigurationsauswahl. In JavaScript-Dateien debuggt `Node.js: aktuelle
+Datei starten` die aktuelle Datei. `Vite: Chrome (localhost:5173)` startet
+Chrome gegen einen bereits laufenden Vite-Dev-Server. Breakpoints und die
+DAP-Steuerung nutzen dieselben Tasten wie beim Python-Debugging. Mason
+installiert den Adapter `js-debug-adapter` automatisch.
+
+`<leader>lT` führt den TypeScript-Projektcheck aus. In `package.json` zeigt
+`package-info.nvim` Paketversionen und bietet Paketaktionen.
 
 ## Betriebssystem-Programme
 

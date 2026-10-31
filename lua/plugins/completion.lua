@@ -14,6 +14,10 @@ return {
           include = {
             "python",
             "lua",
+            "javascript",
+            "javascriptreact",
+            "typescript",
+            "typescriptreact",
           },
         })
       end,

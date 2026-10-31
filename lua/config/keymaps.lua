@@ -155,6 +155,10 @@ end, {
 	desc = "Aktuellen Buffer schließen",
 })
 
+vim.keymap.set("n", "<leader>lT", "<cmd>TSC<cr>", {
+	desc = "TypeScript-Projekt prüfen",
+})
+
 vim.keymap.set("n", "<leader>db", function()
 	require("dap").toggle_breakpoint()
 end, {

@@ -20,11 +20,63 @@ return {
 			"mason-org/mason.nvim",
 		},
 		opts = {
-			ensure_installed = { "python" },
+			ensure_installed = { "python", "js" },
 			handlers = {
 				python = function() end,
+				js = function() end,
 			},
 		},
+	},
+	{
+		"mxsdev/nvim-dap-vscode-js",
+		ft = {
+			"javascript",
+			"javascriptreact",
+			"typescript",
+			"typescriptreact",
+		},
+		dependencies = {
+			"mfussenegger/nvim-dap",
+			"mason-org/mason.nvim",
+		},
+		config = function()
+			require("dap-vscode-js").setup({
+				debugger_cmd = { "js-debug-adapter" },
+				adapters = {
+					"pwa-node",
+					"pwa-chrome",
+				},
+			})
+
+			local dap = require("dap")
+			local node_config = {
+				{
+					name = "Node.js: aktuelle Datei starten",
+					type = "pwa-node",
+					request = "launch",
+					program = "${file}",
+					cwd = "${workspaceFolder}",
+					sourceMaps = true,
+					console = "integratedTerminal",
+				},
+			}
+			local vite_config = {
+				name = "Vite: Chrome (localhost:5173)",
+				type = "pwa-chrome",
+				request = "launch",
+				url = "http://localhost:5173",
+				webRoot = "${workspaceFolder}",
+				sourceMaps = true,
+			}
+
+			for _, filetype in ipairs({ "javascript", "javascriptreact" }) do
+				dap.configurations[filetype] = vim.deepcopy(node_config)
+				table.insert(dap.configurations[filetype], vim.deepcopy(vite_config))
+			end
+			for _, filetype in ipairs({ "typescript", "typescriptreact" }) do
+				dap.configurations[filetype] = { vim.deepcopy(vite_config) }
+			end
+		end,
 	},
 	{
 		"rcarriga/nvim-dap-ui",
