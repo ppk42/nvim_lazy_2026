@@ -74,6 +74,62 @@ vim.keymap.set("n", "<leader>gl", "<cmd>LazyGit<cr>", {
 	desc = "LazyGit öffnen",
 })
 
+vim.keymap.set("n", "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", {
+	desc = "Terminal als Fenster öffnen",
+})
+vim.keymap.set("n", "<leader>th", "<cmd>ToggleTerm direction=horizontal<cr>", {
+	desc = "Terminal horizontal öffnen",
+})
+vim.keymap.set("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<cr>", {
+	desc = "Terminal vertikal öffnen",
+})
+
+local runtime_terminals = {}
+
+local function toggle_runtime_terminal(name, commands)
+	local command
+	for _, candidate in ipairs(commands) do
+		command = vim.fn.exepath(candidate)
+		if command ~= "" then
+			break
+		end
+	end
+
+	if not command or command == "" then
+		vim.notify(table.concat(commands, " oder ") .. " ist nicht im PATH", vim.log.levels.WARN)
+		return
+	end
+
+	if not runtime_terminals[name] then
+		local Terminal = require("toggleterm.terminal").Terminal
+		runtime_terminals[name] = Terminal:new({
+			cmd = command,
+			hidden = true,
+			on_exit = function()
+				runtime_terminals[name] = nil
+			end,
+		})
+	end
+
+	runtime_terminals[name]:toggle()
+end
+
+vim.keymap.set("n", "<leader>tn", function()
+	toggle_runtime_terminal("node", { "node" })
+end, {
+	desc = "Node.js-Terminal öffnen",
+})
+vim.keymap.set("n", "<leader>tp", function()
+	toggle_runtime_terminal("python", { "python", "python3" })
+end, {
+	desc = "Python-Terminal öffnen",
+})
+vim.keymap.set("n", "<leader>te", function()
+	toggle_runtime_terminal("nnn", { "nnn" })
+end, {
+	desc = "nnn-Dateimanager öffnen (e=Explorer)",
+})
+
 vim.keymap.set("n", "<Tab>", function()
 	vim.cmd.bnext()
 end, {
@@ -143,6 +199,11 @@ local M = {
 		{ "<leader>gd", icon = { icon = "", color = "orange" } },
 		{ "<leader>gn", icon = { icon = "", color = "orange" } },
 		{ "<leader>gN", icon = { icon = "", color = "orange" } },
+		{
+			"<leader>t",
+			group = "Terminals",
+			mode = { "n", "x" },
+		},
 		{
 			"<leader>l",
 			group = "LSP Befehle",

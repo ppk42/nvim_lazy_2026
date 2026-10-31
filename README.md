@@ -10,10 +10,11 @@ dokumentiert.
 - `astrotheme`: Helles Farbschema `astrolight`.
 - `snacks.nvim`: Dashboard beim Start ohne Datei.
 - `yazi.nvim`: Dateibrowser.
+- `toggleterm.nvim`: Terminals direkt in Neovim.
 - `telescope.nvim`: Fuzzy-Suche in Dateien, Buffer, Hilfe, Text, Git und mehr.
-- `plenary.nvim`: Abhängigkeit von `yazi.nvim`.
+- `plenary.nvim`: Abhängigkeit von `yazi.nvim` und `telescope.nvim`.
 - `which-key.nvim`: Zeigt mögliche Folgetasten nach dem Leader an.
-- `lazygit.nvim`: Öffnet die Git-Oberfläche LazyGit mit `<leader>gg`.
+- `lazygit.nvim`: Öffnet die Git-Oberfläche LazyGit mit `<leader>gl`.
 - `gitsigns.nvim`: Zeigt Git-Änderungen am Rand und bietet lokale Aktionen.
 - `mason.nvim`: Installiert externe Sprachserver.
 - `mason-lspconfig.nvim`: Verbindet Mason mit Neovims LSP.
@@ -27,6 +28,13 @@ dokumentiert.
 
 `<leader>-` öffnet Yazi an der aktuellen Datei. Das Dashboard startet mit
 `f` die Telescope-Dateisuche.
+
+### Terminals
+
+`<leader>tf`, `<leader>th` und `<leader>tv` öffnen ein schwebendes,
+horizontal geteiltes oder vertikal geteiltes Terminal. `<leader>tn` startet
+Node.js, `<leader>tp` Python und `<leader>te` nnn. Die Programme werden
+anhand des `PATH` der Neovim-Sitzung aufgelöst.
 
 ### Tabs
 
@@ -91,7 +99,7 @@ Quickfix- und Suchverlauf ab. Textsuche verwendet `rg`.
 
 ### Git
 
-`<leader>gg` öffnet LazyGit. In Git-Dateien zeigt Gitsigns Änderungen am
+`<leader>gl` öffnet LazyGit. In Git-Dateien zeigt Gitsigns Änderungen am
 Rand an. `<leader>ghp` zeigt einen Hunk, `<leader>ghs` staged ihn,
 `<leader>ghu` nimmt ihn aus dem Index, `<leader>ghb` zeigt den Zeilenverlauf
 und `<leader>ghd` öffnet den Diff. `<leader>ghn` und `<leader>ghN`
