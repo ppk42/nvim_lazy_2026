@@ -25,9 +25,8 @@ dokumentiert.
 
 ### Yazi
 
-`<leader>-` öffnet Yazi an der aktuellen Datei. Mit `y` auf dem Dashboard
-startet Yazi im aktuellen Arbeitsverzeichnis. Bei beiden Startwegen wird
-eine ausgewählte Datei in einem neuen Neovim-Tab geöffnet.
+`<leader>-` öffnet Yazi an der aktuellen Datei. Das Dashboard startet mit
+`f` die Telescope-Dateisuche.
 
 ### Tabs
 

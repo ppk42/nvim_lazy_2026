@@ -167,10 +167,10 @@ local M = {
 			action = ":ene",
 		},
 		{
-			icon = "󰇥 ",
-			key = "y",
-			desc = "Datei mit Yazi öffnen",
-			action = ":Yazi cwd",
+			icon = " ",
+			key = "f",
+			desc = "Datei suchen",
+			action = ":Telescope find_files",
 		},
 		{
 			icon = "󰒲 ",
