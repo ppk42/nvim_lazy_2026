@@ -180,6 +180,28 @@ local function focus_dap_window(filetype, enter_insert)
 	vim.notify("DAP-Bereich ist nicht geöffnet", vim.log.levels.WARN)
 end
 
+local function terminate_dap_session()
+	local dap = require("dap")
+	local function close_if_idle()
+		if dap.session() then
+			return
+		end
+		require("dapui").close()
+		require("config.keymaps").detach_dap_session()
+	end
+
+	if not dap.session() and vim.tbl_isempty(dap.sessions()) then
+		close_if_idle()
+		return
+	end
+
+	dap.terminate({
+		all = true,
+		hierarchy = true,
+		on_done = close_if_idle,
+	})
+end
+
 vim.keymap.set("n", "<F5>", function()
 	require("dap").continue()
 end, {
@@ -205,10 +227,46 @@ vim.keymap.set("n", "<leader>dB", function()
 end, {
 	desc = "Breakpoints entfernen",
 })
+
+local function find_dap_configuration(name)
+	local dap = require("dap")
+	for _, config in ipairs(dap.configurations[vim.bo.filetype] or {}) do
+		if config.name == name then
+			return vim.deepcopy(config)
+		end
+	end
+end
+
 vim.keymap.set("n", "<leader>dc", function()
-	require("dap").continue()
+	local dap = require("dap")
+	if dap.session() then
+		dap.continue()
+		return
+	end
+
+	local config = find_dap_configuration("Node.js: aktuelle Datei starten")
+	if not config then
+		vim.notify(
+			"Keine Node.js-Startkonfiguration für " .. vim.bo.filetype,
+			vim.log.levels.WARN
+		)
+		return
+	end
+
+	dap.run(config)
 end, {
 	desc = "Debugging starten oder fortsetzen",
+})
+vim.keymap.set("n", "<leader>da", function()
+	local config = find_dap_configuration("Node.js: an laufenden Prozess anhängen")
+	if not config then
+		vim.notify("Keine Node.js-Attach-Konfiguration für " .. vim.bo.filetype, vim.log.levels.WARN)
+		return
+	end
+
+	require("dap").run(config, { new = true })
+end, {
+	desc = "An laufenden Node.js-Prozess anhängen",
 })
 vim.keymap.set("n", "<leader>du", function()
 	require("dapui").toggle()
@@ -489,7 +547,7 @@ function M.attach_dap_session()
 		desc = "REPL fokussieren und Eingabe starten",
 	})
 	vim.keymap.set("n", "<leader>dQ", function()
-		require("dap").terminate()
+		terminate_dap_session()
 	end, {
 		desc = "Debugging beenden",
 	})

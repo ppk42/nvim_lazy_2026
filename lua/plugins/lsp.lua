@@ -4,12 +4,8 @@ return {
     "BufReadPre",
     "BufNewFile",
   },
-  cmd = "Mason",
   dependencies = {
-    {
-      "mason-org/mason.nvim",
-      opts = {},
-    },
+    "mason-org/mason.nvim",
     "neovim/nvim-lspconfig",
     "hrsh7th/cmp-nvim-lsp",
   },

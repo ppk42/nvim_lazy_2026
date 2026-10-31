@@ -16,8 +16,7 @@ dokumentiert.
 - `nvim-dap`, `nvim-dap-python` und `nvim-dap-ui`: Python- und
   JavaScript-Debugging.
 - `mason-nvim-dap.nvim`: Installiert `debugpy` und `js-debug-adapter`.
-- `nvim-dap-vscode-js`: Node.js- und Chrome-Debugging für JavaScript,
-  TypeScript und React.
+- `nvim-dap-vscode-js`: Node.js-Debugging für JavaScript und TypeScript.
 - `plenary.nvim`: Abhängigkeit von `yazi.nvim` und `telescope.nvim`.
 - `which-key.nvim`: Zeigt mögliche Folgetasten nach dem Leader an.
 - `lazygit.nvim`: Öffnet die Git-Oberfläche LazyGit mit `<leader>gl`.
@@ -94,12 +93,14 @@ In DAP-Bereichen ändern Ctrl-Pfeiltasten die Fenstergröße.
 
 ## JavaScript- und TypeScript-Debugging
 
-In JavaScript-, TypeScript- und React-Dateien öffnet `<leader>dc` die
-Konfigurationsauswahl. In JavaScript-Dateien debuggt `Node.js: aktuelle
-Datei starten` die aktuelle Datei. `Vite: Chrome (localhost:5173)` startet
-Chrome gegen einen bereits laufenden Vite-Dev-Server. Breakpoints und die
-DAP-Steuerung nutzen dieselben Tasten wie beim Python-Debugging. Mason
-installiert den Adapter `js-debug-adapter` automatisch.
+In JavaScript-Dateien startet `<leader>dc` die aktuelle Datei direkt oder
+setzt die Debug-Sitzung fort. Mit `<leader>da` kannst du dich an einen
+laufenden Node.js-Prozess anhängen. Starte ihn dafür mit
+`node --inspect-brk app.js`; Neovim fragt dann den Prozess ab. TypeScript
+unterstützt den Attach-Pfad; zum Starten einer `.ts`-Datei ist ein
+projektspezifischer TypeScript-Runner nötig.
+Breakpoints und die DAP-Steuerung nutzen dieselben Tasten wie beim
+Python-Debugging. Mason installiert `js-debug-adapter` automatisch.
 
 `<leader>lT` führt den TypeScript-Projektcheck aus. In `package.json` zeigt
 `package-info.nvim` Paketversionen und bietet Paketaktionen.
