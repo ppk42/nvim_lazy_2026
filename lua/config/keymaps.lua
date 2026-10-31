@@ -131,6 +131,11 @@ local M = {
 			mode = { "n", "x" },
 		},
 		{
+			"<leader>gh",
+			group = "Git-Hunks",
+			mode = { "n", "x" },
+		},
+		{
 			"<leader>l",
 			group = "LSP Befehle",
 			mode = { "n", "x" },
@@ -251,6 +256,45 @@ function M.attach_lsp(buf)
 		})
 		vim.cmd.copen()
 	end, "Diagnosen der aktuellen Datei anzeigen")
+end
+
+function M.attach_gitsigns(buf)
+	local function map(mode, lhs, rhs, desc)
+		vim.keymap.set(mode, lhs, rhs, {
+			buffer = buf,
+			desc = desc,
+		})
+	end
+
+	map("n", "<leader>gp", function()
+		require("gitsigns").preview_hunk()
+	end, "Änderung anzeigen")
+	map("n", "<leader>gs", function()
+		require("gitsigns").stage_hunk()
+	end, "Änderung zum Index hinzufügen")
+	map("v", "<leader>gs", function()
+		local start_line = vim.fn.line(".")
+		local end_line = vim.fn.line("v")
+		require("gitsigns").stage_hunk({
+			math.min(start_line, end_line),
+			math.max(start_line, end_line),
+		})
+	end, "Auswahl zum Index hinzufügen")
+	map("n", "<leader>gu", function()
+		require("gitsigns").stage_hunk()
+	end, "Änderung aus dem Index entfernen")
+	map("n", "<leader>gb", function()
+		require("gitsigns").blame_line({ full = true })
+	end, "Zeilenverlauf anzeigen")
+	map("n", "<leader>gd", function()
+		require("gitsigns").diffthis()
+	end, "Änderungen vergleichen")
+	map("n", "<leader>gn", function()
+		require("gitsigns").nav_hunk("next")
+	end, "Nächste Änderung")
+	map("n", "<leader>gN", function()
+		require("gitsigns").nav_hunk("prev")
+	end, "Vorherige Änderung")
 end
 
 return M

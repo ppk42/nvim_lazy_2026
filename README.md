@@ -14,6 +14,7 @@ dokumentiert.
 - `plenary.nvim`: Abhängigkeit von `yazi.nvim`.
 - `which-key.nvim`: Zeigt mögliche Folgetasten nach dem Leader an.
 - `lazygit.nvim`: Öffnet die Git-Oberfläche LazyGit mit `<leader>gg`.
+- `gitsigns.nvim`: Zeigt Git-Änderungen am Rand und bietet lokale Aktionen.
 - `mason.nvim`: Installiert externe Sprachserver.
 - `mason-lspconfig.nvim`: Verbindet Mason mit Neovims LSP.
 - `nvim-lspconfig`: Stellt die LSP-Konfigurationen bereit.
@@ -88,3 +89,11 @@ Alle Suchlisten starten mit `<leader>f`. `<leader>ff` sucht Dateien,
 `<leader>fh` öffnen die Suche in Buffern, Registern und Hilfe. Weitere
 Picker decken unter anderem Git, LSP, Diagnosen, Befehle, Marks, Optionen,
 Quickfix- und Suchverlauf ab. Textsuche verwendet `rg`.
+
+### Git
+
+`<leader>gg` öffnet LazyGit. In Git-Dateien zeigt Gitsigns Änderungen am
+Rand an. `<leader>ghp` zeigt einen Hunk, `<leader>ghs` staged ihn,
+`<leader>ghu` nimmt ihn aus dem Index, `<leader>ghb` zeigt den Zeilenverlauf
+und `<leader>ghd` öffnet den Diff. `<leader>ghn` und `<leader>ghN`
+springen zwischen Änderungen.
