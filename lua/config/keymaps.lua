@@ -41,7 +41,7 @@ local telescope_pickers = {
 	{ "<leader>fR", "resume", "Letzte Suche fortsetzen" },
 	{ "<leader>fLR", "reloader", "Lua-Module neu laden" },
 	{ "<leader>fS", "spell_suggest", "Rechtschreibvorschläge" },
-	{ "<leader>fT", "treesitter", "Treesitter-Symbole suchen" },
+	{ "<leader>fY", "treesitter", "Treesitter-Symbole suchen" },
 	{ "<leader>f/", "current_buffer_fuzzy_find", "Im Buffer suchen" },
 	{ "<leader>fGf", "git_files", "Git-Dateien suchen" },
 	{ "<leader>fGc", "git_commits", "Git-Commits suchen" },
@@ -65,6 +65,10 @@ local telescope_pickers = {
 for _, picker in ipairs(telescope_pickers) do
 	map_telescope(picker[1], picker[2], picker[3], picker[4])
 end
+
+vim.keymap.set("n", "<leader>fT", "<cmd>TodoTelescope<cr>", {
+	desc = "TODOs suchen",
+})
 
 vim.keymap.set("n", "<leader>-", "<cmd>Yazi<cr>", {
 	desc = "Yazi-Dateibrowser öffnen",

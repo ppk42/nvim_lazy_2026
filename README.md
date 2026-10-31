@@ -12,6 +12,7 @@ dokumentiert.
 - `yazi.nvim`: Dateibrowser.
 - `toggleterm.nvim`: Terminals direkt in Neovim.
 - `telescope.nvim`: Fuzzy-Suche in Dateien, Buffer, Hilfe, Text, Git und mehr.
+- `todo-comments.nvim`: TODO-Kommentare mit Telescope durchsuchen.
 - `plenary.nvim`: Abhängigkeit von `yazi.nvim` und `telescope.nvim`.
 - `which-key.nvim`: Zeigt mögliche Folgetasten nach dem Leader an.
 - `lazygit.nvim`: Öffnet die Git-Oberfläche LazyGit mit `<leader>gl`.
@@ -93,8 +94,9 @@ Zeilennummern sind aktiviert.
 
 Alle Suchlisten starten mit `<leader>f`. `<leader>ff` sucht Dateien,
 `<leader>fg` durchsucht Text und `<leader>fb`, `<leader>fr` sowie
-`<leader>fh` öffnen die Suche in Buffern, Registern und Hilfe. Weitere
-Picker decken unter anderem Git, LSP, Diagnosen, Befehle, Marks, Optionen,
+`<leader>fh` öffnen die Suche in Buffern, Registern und Hilfe. `<leader>fT`
+sucht TODO-Kommentare; `<leader>fY` sucht Treesitter-Symbole. Weitere Picker
+decken unter anderem Git, LSP, Diagnosen, Befehle, Marks, Optionen,
 Quickfix- und Suchverlauf ab. Textsuche verwendet `rg`.
 
 ### Git
