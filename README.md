@@ -13,6 +13,8 @@ dokumentiert.
 - `toggleterm.nvim`: Terminals direkt in Neovim.
 - `telescope.nvim`: Fuzzy-Suche in Dateien, Buffer, Hilfe, Text, Git und mehr.
 - `todo-comments.nvim`: TODO-Kommentare mit Telescope durchsuchen.
+- `nvim-dap`, `nvim-dap-python` und `nvim-dap-ui`: Python-Debugging.
+- `mason-nvim-dap.nvim`: Installiert `debugpy` für den Python-Debugger.
 - `plenary.nvim`: Abhängigkeit von `yazi.nvim` und `telescope.nvim`.
 - `which-key.nvim`: Zeigt mögliche Folgetasten nach dem Leader an.
 - `lazygit.nvim`: Öffnet die Git-Oberfläche LazyGit mit `<leader>gl`.
@@ -64,6 +66,23 @@ sichtbar. `<leader>le` zeigt die Diagnosen der aktuellen Datei in der
 Quickfix-Liste. `<CR>` springt zur gewählten Stelle und schließt die Liste.
 `<leader>lgra` bietet an der Fehlerstelle Korrekturen an. Relative
 Zeilennummern sind aktiviert.
+
+## Python-Debugging
+
+`<leader>db` setzt oder entfernt einen Breakpoint. `<leader>dc` startet
+oder setzt das Debugging fort; dabei kann die Konfiguration `file` gewählt
+werden. F10 geht zum nächsten Schritt, F11 springt in eine Funktion und
+Shift+F11 springt aus ihr heraus. `<leader>dQ` beendet die Sitzung und ist nur
+während einer aktiven Sitzung verfügbar. Während der Debugger verbunden ist,
+schaltet `<leader>du` die Oberfläche um.
+Die Fokus- und Größen-Keymaps sind ebenfalls nur dann aktiv.
+`<leader>ds`, `<leader>df`,
+`<leader>dp` und `<leader>dw` fokussieren Variablen, Stack Frames, Breakpoints
+und Watches. `<leader>dr` fokussiert die REPL und startet die Eingabe.
+Im Visual-Modus wertet `<leader>dE` die Auswahl aus. Mason installiert
+`debugpy` automatisch.
+F5 setzt das Debugging fort.
+In DAP-Bereichen ändern Ctrl-Pfeiltasten die Fenstergröße.
 
 ## Betriebssystem-Programme
 

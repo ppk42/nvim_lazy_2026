@@ -155,6 +155,68 @@ end, {
 	desc = "Aktuellen Buffer schließen",
 })
 
+vim.keymap.set("n", "<leader>db", function()
+	require("dap").toggle_breakpoint()
+end, {
+	desc = "Breakpoint umschalten",
+})
+
+local function focus_dap_window(filetype, enter_insert)
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		local buf = vim.api.nvim_win_get_buf(win)
+		if vim.bo[buf].filetype == filetype then
+			vim.api.nvim_set_current_win(win)
+			if enter_insert then
+				vim.cmd.startinsert()
+			end
+			return
+		end
+	end
+
+	vim.notify("DAP-Bereich ist nicht geöffnet", vim.log.levels.WARN)
+end
+
+vim.keymap.set("n", "<F5>", function()
+	require("dap").continue()
+end, {
+	desc = "Debugging fortsetzen",
+})
+vim.keymap.set("n", "<F10>", function()
+	require("dap").step_over()
+end, {
+	desc = "Debugger: nächster Schritt",
+})
+vim.keymap.set("n", "<F11>", function()
+	require("dap").step_into()
+end, {
+	desc = "Debugger: hineinspringen",
+})
+vim.keymap.set("n", "<F23>", function()
+	require("dap").step_out()
+end, {
+	desc = "Debugger: herausspringen",
+})
+vim.keymap.set("n", "<leader>dB", function()
+	require("dap").clear_breakpoints()
+end, {
+	desc = "Breakpoints entfernen",
+})
+vim.keymap.set("n", "<leader>dc", function()
+	require("dap").continue()
+end, {
+	desc = "Debugging starten oder fortsetzen",
+})
+vim.keymap.set("n", "<leader>du", function()
+	require("dapui").toggle()
+end, {
+	desc = "Debugger-Oberfläche umschalten",
+})
+vim.keymap.set("x", "<leader>dE", function()
+	require("dapui").eval()
+end, {
+	desc = "Auswahl auswerten",
+})
+
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "qf",
 	callback = function(event)
@@ -175,6 +237,11 @@ vim.api.nvim_create_autocmd("FileType", {
 
 local M = {
 	which_key = {
+		{
+			"<leader>d",
+			group = "Debuggen",
+			mode = { "n", "x" },
+		},
 		{
 			"<leader>f",
 			group = "Suchen",
@@ -368,6 +435,105 @@ function M.attach_gitsigns(buf)
 	map("n", "<leader>gN", function()
 		require("gitsigns").nav_hunk("prev")
 	end, "Vorherige Änderung")
+end
+
+local dap_session_maps_active = false
+local dap_ui_map_keys = {
+	"<leader>ds",
+	"<leader>df",
+	"<leader>dp",
+	"<leader>dw",
+	"<leader>dr",
+	"<leader>dQ",
+}
+local dap_ui_resize_keys = {
+	"<C-Up>",
+	"<C-Down>",
+	"<C-Left>",
+	"<C-Right>",
+}
+
+function M.attach_dap_session()
+	if dap_session_maps_active then
+		return
+	end
+
+	dap_session_maps_active = true
+	vim.keymap.set("n", "<leader>ds", function()
+		focus_dap_window("dapui_scopes")
+	end, {
+		desc = "Zu Variablen wechseln",
+	})
+	vim.keymap.set("n", "<leader>df", function()
+		focus_dap_window("dapui_stacks")
+	end, {
+		desc = "Zu Stack Frames wechseln",
+	})
+	vim.keymap.set("n", "<leader>dp", function()
+		focus_dap_window("dapui_breakpoints")
+	end, {
+		desc = "Zu Breakpoints wechseln",
+	})
+	vim.keymap.set("n", "<leader>dw", function()
+		focus_dap_window("dapui_watches")
+	end, {
+		desc = "Zu Watches wechseln",
+	})
+	vim.keymap.set("n", "<leader>dr", function()
+		focus_dap_window("dap-repl", true)
+	end, {
+		desc = "REPL fokussieren und Eingabe starten",
+	})
+	vim.keymap.set("n", "<leader>dQ", function()
+		require("dap").terminate()
+	end, {
+		desc = "Debugging beenden",
+	})
+
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.api.nvim_buf_is_valid(buf) then
+			local filetype = vim.bo[buf].filetype
+			if filetype:match("^dapui_") or filetype == "dap-repl" then
+				vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>", {
+					buffer = buf,
+					desc = "DAP-Bereich höher machen",
+				})
+				vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<cr>", {
+					buffer = buf,
+					desc = "DAP-Bereich niedriger machen",
+				})
+				vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -4<cr>", {
+					buffer = buf,
+					desc = "DAP-Bereich schmaler machen",
+				})
+				vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +4<cr>", {
+					buffer = buf,
+					desc = "DAP-Bereich breiter machen",
+				})
+			end
+		end
+	end
+end
+
+function M.detach_dap_session()
+	if not dap_session_maps_active then
+		return
+	end
+
+	dap_session_maps_active = false
+	for _, lhs in ipairs(dap_ui_map_keys) do
+		vim.keymap.del("n", lhs)
+	end
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.api.nvim_buf_is_valid(buf) then
+			local filetype = vim.bo[buf].filetype
+			if filetype:match("^dapui_") or filetype == "dap-repl" then
+				for _, lhs in ipairs(dap_ui_resize_keys) do
+					pcall(vim.keymap.del, "n", lhs, { buffer = buf })
+				end
+			end
+		end
+	end
 end
 
 return M
