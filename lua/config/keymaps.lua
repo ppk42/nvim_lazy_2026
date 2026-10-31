@@ -70,7 +70,7 @@ vim.keymap.set("n", "<leader>-", "<cmd>Yazi<cr>", {
 	desc = "Yazi-Dateibrowser öffnen",
 })
 
-vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<cr>", {
+vim.keymap.set("n", "<leader>gl", "<cmd>LazyGit<cr>", {
 	desc = "LazyGit öffnen",
 })
 
@@ -131,10 +131,18 @@ local M = {
 			mode = { "n", "x" },
 		},
 		{
-			"<leader>gh",
+			"<leader>g",
 			group = "Git-Hunks",
 			mode = { "n", "x" },
 		},
+		{ "<leader>gl", icon = { icon = "", color = "orange" } },
+		{ "<leader>gp", icon = { icon = "", color = "orange" } },
+		{ "<leader>gs", icon = { icon = "", color = "orange" } },
+		{ "<leader>gu", icon = { icon = "", color = "orange" } },
+		{ "<leader>gb", icon = { icon = "", color = "orange" } },
+		{ "<leader>gd", icon = { icon = "", color = "orange" } },
+		{ "<leader>gn", icon = { icon = "", color = "orange" } },
+		{ "<leader>gN", icon = { icon = "", color = "orange" } },
 		{
 			"<leader>l",
 			group = "LSP Befehle",
