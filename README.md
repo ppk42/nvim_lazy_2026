@@ -10,6 +10,7 @@ dokumentiert.
 - `astrotheme`: Helles Farbschema `astrolight`.
 - `snacks.nvim`: Dashboard beim Start ohne Datei.
 - `yazi.nvim`: Dateibrowser.
+- `telescope.nvim`: Fuzzy-Suche in Dateien, Buffer, Hilfe, Text, Git und mehr.
 - `plenary.nvim`: Abhängigkeit von `yazi.nvim`.
 - `which-key.nvim`: Zeigt mögliche Folgetasten nach dem Leader an.
 - `mason.nvim`: Installiert externe Sprachserver.
@@ -77,3 +78,11 @@ Zeilennummern sind aktiviert.
 | Shell | Bash 5.3.20 |
 | Neovim | 0.12.6 |
 | Lua | 5.1, LuaJIT 2.1.1792588164 |
+
+### Telescope
+
+Alle Suchlisten starten mit `<leader>f`. `<leader>ff` sucht Dateien,
+`<leader>fg` durchsucht Text und `<leader>fb`, `<leader>fr` sowie
+`<leader>fh` öffnen die Suche in Buffern, Registern und Hilfe. Weitere
+Picker decken unter anderem Git, LSP, Diagnosen, Befehle, Marks, Optionen,
+Quickfix- und Suchverlauf ab. Textsuche verwendet `rg`.

@@ -1,6 +1,71 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
+local function map_telescope(lhs, picker, desc, mode)
+	vim.keymap.set(mode or "n", lhs, function()
+		require("telescope.builtin")[picker]()
+	end, {
+		desc = desc,
+	})
+end
+
+local telescope_pickers = {
+	{ "<leader>fa", "autocommands", "Autocommands suchen" },
+	{ "<leader>fB", "builtin", "Telescope-Builtins suchen" },
+	{ "<leader>ff", "find_files", "Dateien suchen" },
+	{ "<leader>fg", "live_grep", "Text suchen" },
+	{ "<leader>fw", "grep_string", "Wort unter Cursor suchen" },
+	{ "<leader>fb", "buffers", "Buffer suchen" },
+	{ "<leader>fr", "registers", "Register suchen" },
+	{ "<leader>fh", "help_tags", "Hilfe durchsuchen" },
+	{ "<leader>fo", "oldfiles", "Zuletzt geöffnete Dateien" },
+	{ "<leader>fk", "keymaps", "Tastenkombinationen suchen" },
+	{ "<leader>fCO", "commands", "Befehle suchen" },
+	{ "<leader>fCH", "command_history", "Befehlshistorie suchen" },
+	{ "<leader>fs", "search_history", "Suchhistorie durchsuchen" },
+	{ "<leader>fm", "marks", "Markierungen suchen" },
+	{ "<leader>fj", "jumplist", "Sprungliste durchsuchen" },
+	{ "<leader>ft", "tags", "Tags durchsuchen" },
+	{ "<leader>fct", "current_buffer_tags", "Tags im Buffer durchsuchen" },
+	{ "<leader>fq", "quickfix", "Quickfix-Liste durchsuchen" },
+	{ "<leader>fQ", "quickfixhistory", "Quickfix-Verlauf" },
+	{ "<leader>fl", "loclist", "Ortsliste durchsuchen" },
+	{ "<leader>fF", "filetypes", "Dateitypen suchen" },
+	{ "<leader>fH", "highlights", "Highlights durchsuchen" },
+	{ "<leader>fcs", "colorscheme", "Farbschema auswählen" },
+	{ "<leader>fM", "man_pages", "Manpages durchsuchen" },
+	{ "<leader>fp", "planets", "Telescope-Planeten ansehen" },
+	{ "<leader>fy", "symbols", "Vordefinierte Symbole suchen" },
+	{ "<leader>fv", "vim_options", "Neovim-Optionen suchen" },
+	{ "<leader>fP", "pickers", "Telescope-Picker suchen" },
+	{ "<leader>fR", "resume", "Letzte Suche fortsetzen" },
+	{ "<leader>fLR", "reloader", "Lua-Module neu laden" },
+	{ "<leader>fS", "spell_suggest", "Rechtschreibvorschläge" },
+	{ "<leader>fT", "treesitter", "Treesitter-Symbole suchen" },
+	{ "<leader>f/", "current_buffer_fuzzy_find", "Im Buffer suchen" },
+	{ "<leader>fGf", "git_files", "Git-Dateien suchen" },
+	{ "<leader>fGc", "git_commits", "Git-Commits suchen" },
+	{ "<leader>fGC", "git_bcommits", "Buffer-Commits suchen" },
+	{ "<leader>fGR", "git_bcommits_range", "Commits für Zeilen suchen", "x" },
+	{ "<leader>fGb", "git_branches", "Git-Branches suchen" },
+	{ "<leader>fGs", "git_status", "Git-Status durchsuchen" },
+	{ "<leader>fGS", "git_stash", "Git-Stash durchsuchen" },
+	{ "<leader>fLr", "lsp_references", "LSP-Referenzen suchen" },
+	{ "<leader>fLd", "lsp_definitions", "LSP-Definitionen suchen" },
+	{ "<leader>fLi", "lsp_implementations", "LSP-Implementierungen suchen" },
+	{ "<leader>fLt", "lsp_type_definitions", "LSP-Typdefinitionen suchen" },
+	{ "<leader>fLs", "lsp_document_symbols", "Symbole im Dokument suchen" },
+	{ "<leader>fLS", "lsp_workspace_symbols", "LSP-Arbeitsbereichssymbole" },
+	{ "<leader>fLw", "lsp_dynamic_workspace_symbols", "Dynamische LSP-Symbole" },
+	{ "<leader>fLI", "lsp_incoming_calls", "Eingehende Aufrufe suchen" },
+	{ "<leader>fLO", "lsp_outgoing_calls", "Ausgehende Aufrufe suchen" },
+	{ "<leader>fLD", "diagnostics", "Diagnosen durchsuchen" },
+}
+
+for _, picker in ipairs(telescope_pickers) do
+	map_telescope(picker[1], picker[2], picker[3], picker[4])
+end
+
 vim.keymap.set("n", "<leader>-", "<cmd>Yazi<cr>", {
 	desc = "Yazi-Dateibrowser öffnen",
 })
@@ -46,6 +111,21 @@ vim.api.nvim_create_autocmd("FileType", {
 
 local M = {
 	which_key = {
+		{
+			"<leader>f",
+			group = "Suchen",
+			mode = { "n", "x" },
+		},
+		{
+			"<leader>fG",
+			group = "Git-Suche",
+			mode = { "n", "x" },
+		},
+		{
+			"<leader>fL",
+			group = "LSP-Suche",
+			mode = { "n", "x" },
+		},
 		{
 			"<leader>l",
 			group = "LSP Befehle",
