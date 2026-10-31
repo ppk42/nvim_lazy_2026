@@ -13,6 +13,7 @@ dokumentiert.
 - `telescope.nvim`: Fuzzy-Suche in Dateien, Buffer, Hilfe, Text, Git und mehr.
 - `plenary.nvim`: Abhängigkeit von `yazi.nvim`.
 - `which-key.nvim`: Zeigt mögliche Folgetasten nach dem Leader an.
+- `lazygit.nvim`: Öffnet die Git-Oberfläche LazyGit mit `<leader>gg`.
 - `mason.nvim`: Installiert externe Sprachserver.
 - `mason-lspconfig.nvim`: Verbindet Mason mit Neovims LSP.
 - `nvim-lspconfig`: Stellt die LSP-Konfigurationen bereit.
@@ -59,6 +60,7 @@ Zeilennummern sind aktiviert.
 
 - Neovim mit LuaJIT: Editor und Ausführung der Lua-Konfiguration.
 - Git: Installation und Aktualisierung der Plugins mit `lazy.nvim`.
+- LazyGit: Das Programm `lazygit` muss im System-PATH verfügbar sein.
 - ripgrep (`rg`): schnelle Textsuche mit Neovim.
 - curl: Netzwerkzugriffe über `vim.net.request()`.
 - Node.js und npm: Installation und Ausführung von `pyright`.

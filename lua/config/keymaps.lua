@@ -70,6 +70,10 @@ vim.keymap.set("n", "<leader>-", "<cmd>Yazi<cr>", {
 	desc = "Yazi-Dateibrowser öffnen",
 })
 
+vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<cr>", {
+	desc = "LazyGit öffnen",
+})
+
 vim.keymap.set("n", "<Tab>", function()
 	vim.cmd.bnext()
 end, {
