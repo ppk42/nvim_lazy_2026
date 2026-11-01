@@ -95,12 +95,24 @@ schwebenden Terminal aus.
 ## Obsidian-Wiki
 
 `obsidian.nvim` verwendet `/home/pkiefer/11_Notes/obsidian/DAFIS` als Workspace
-`DAFIS`. `<leader>mn` erstellt eine Notiz, `<leader>ms` öffnet eine per Namen
-ausgewählte Notiz, `<leader>mf` durchsucht den Vault und `<leader>mw` wechselt
-den Workspace. Mit `gf` auf einem Markdown-Link wird diesem gefolgt.
+`DAFIS`. Die Obsidian-Befehlsmaps beginnen mit `<leader>o`.
+`<leader>on` erstellt eine Notiz, `<leader>oq` öffnet eine nach Namen
+ausgewählte Notiz,
+`<leader>os` durchsucht Inhalte und `<leader>ow` wechselt den Workspace.
+`<leader>ot`, `<leader>oy`, `<leader>oY` und `<leader>oD` öffnen Tagesnotizen.
+`<leader>og`, `<leader>op`, `<leader>ob` und `<leader>oB` öffnen die Picker für
+Tags, Eigenschaften, Lesezeichen und Rückverweise.
+
+Notizaktionen liegen ebenfalls unter `<leader>o`: Links folgen (`of`),
+Auswahl verknüpfen (`ol`), neue verknüpfte Notiz (`oN`), Links anzeigen (`oL`),
+Vorlagen einfügen (`oi`) oder anwenden (`oM`), umbenennen (`or`), Bild
+einfügen (`oI`), Auswahl extrahieren (`oE`), Checkbox (`oc`),
+Inhaltsverzeichnis (`oT`) und Fußnoten (`oF`). `<leader>oC` prüft den Vault,
+`<leader>oR` baut den Cache neu auf, `<leader>oS` öffnet Sync, `<leader>oh` und
+`<leader>oH` öffnen die Hilfe. `<leader>oU` erstellt eine Notiz mit eindeutiger
+ID. Im Vault folgt `gf` weiterhin einem Link.
 Weitere Vaults lassen sich in `lua/plugins/obsidian.lua` unter `workspaces`
-eintragen und anschließend über `<leader>mw` auswählen. Der Pfad des
-eingetragenen Workspaces kann dort jederzeit angepasst werden.
+eintragen und mit `<leader>ow` auswählen.
 
 ## Python-Debugging
 

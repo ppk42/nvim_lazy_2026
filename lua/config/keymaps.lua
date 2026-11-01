@@ -159,18 +159,47 @@ vim.keymap.set("n", "<leader>lT", "<cmd>TSC<cr>", {
 	desc = "TypeScript-Projekt prüfen",
 })
 
-vim.keymap.set("n", "<leader>mf", "<cmd>Obsidian search<cr>", {
-	desc = "Wiki durchsuchen",
-})
-vim.keymap.set("n", "<leader>mn", "<cmd>Obsidian new<cr>", {
-	desc = "Wiki-Notiz erstellen",
-})
-vim.keymap.set("n", "<leader>ms", "<cmd>Obsidian quick_switch<cr>", {
-	desc = "Wiki-Notiz öffnen",
-})
-vim.keymap.set("n", "<leader>mw", "<cmd>Obsidian workspace<cr>", {
-	desc = "Wiki-Workspace wechseln",
-})
+local obsidian_mappings = {
+	{ "<leader>oC", "check", "Vault-Konfiguration prüfen" },
+	{ "<leader>ot", "today", "Heutige Notiz öffnen" },
+	{ "<leader>oy", "yesterday", "Gestrige Notiz öffnen" },
+	{ "<leader>oY", "tomorrow", "Morgige Notiz öffnen" },
+	{ "<leader>oD", "dailies", "Tagesnotizen durchsuchen" },
+	{ "<leader>on", "new", "Wiki-Notiz erstellen" },
+	{ "<leader>oo", "open", "Notiz in Obsidian öffnen" },
+	{ "<leader>og", "tags", "Tags durchsuchen" },
+	{ "<leader>op", "properties", "Eigenschaften durchsuchen" },
+	{ "<leader>os", "search", "Wiki-Inhalte durchsuchen" },
+	{ "<leader>oS", "sync", "Obsidian-Sync" },
+	{ "<leader>oM", "new_from_template", "Notiz aus Vorlage erstellen" },
+	{ "<leader>oq", "quick_switch", "Wiki-Notiz öffnen" },
+	{ "<leader>oR", "rebuild_cache", "Wiki-Cache neu aufbauen" },
+	{ "<leader>ow", "workspace", "Wiki-Workspace wechseln" },
+	{ "<leader>oh", "help", "Obsidian-Hilfe öffnen" },
+	{ "<leader>oH", "helpgrep", "Obsidian-Hilfe durchsuchen" },
+	{ "<leader>oU", "unique_note", "Notiz mit eindeutiger ID erstellen" },
+	{ "<leader>ob", "bookmarks", "Lesezeichen durchsuchen" },
+	{ "<leader>oB", "backlinks", "Rückverweise anzeigen" },
+	{ "<leader>oi", "template", "Vorlage in Notiz einfügen" },
+	{ "<leader>oN", "link_new", "Aus Auswahl verknüpfte Notiz erstellen", "x" },
+	{ "<leader>ol", "link", "Auswahl mit Notiz verknüpfen", "x" },
+	{ "<leader>oL", "links", "Links in Notiz anzeigen" },
+	{ "<leader>of", "follow_link", "Wiki-Link folgen" },
+	{ "<leader>oc", "toggle_checkbox", "Checkbox umschalten", { "n", "x" } },
+	{ "<leader>or", "rename", "Notiz umbenennen" },
+	{ "<leader>oI", "paste_img", "Bild aus Zwischenablage einfügen" },
+	{ "<leader>oE", "extract_note", "Auswahl als Notiz extrahieren", "x" },
+	{ "<leader>oT", "toc", "Inhaltsverzeichnis der Notiz öffnen" },
+	{ "<leader>oF", "footnotes", "Fußnoten der Notiz anzeigen" },
+}
+
+for _, mapping in ipairs(obsidian_mappings) do
+	local command = "<cmd>Obsidian " .. mapping[2] .. "<cr>"
+	vim.keymap.set(mapping[4] or "n", mapping[1], command, {
+		desc = mapping[3],
+	})
+end
+
 vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", {
 	desc = "Markdown-Vorschau im Browser umschalten",
 })
