@@ -12,6 +12,7 @@ dokumentiert.
 - `yazi.nvim`: Dateibrowser.
 - `toggleterm.nvim`: Terminals direkt in Neovim.
 - `telescope.nvim`: Fuzzy-Suche in Dateien, Buffer, Hilfe, Text, Git und mehr.
+- `telescope-fzf-native.nvim`: fzf-Suchsyntax für Telescope-Picker.
 - `todo-comments.nvim`: TODO-Kommentare mit Telescope durchsuchen.
 - `nvim-dap`, `nvim-dap-python` und `nvim-dap-ui`: Python- und
   JavaScript-Debugging.
@@ -141,6 +142,7 @@ Python-Debugging. Mason installiert `js-debug-adapter` automatisch.
 - curl: Netzwerkzugriffe über `vim.net.request()`.
 - Node.js und npm: Installation und Ausführung von `pyright`.
 - unzip: Entpacken von Sprachservern durch Mason.
+- make und ein C-Compiler: Build von `telescope-fzf-native.nvim`.
 - Eine Schrift mit Nerd-Font-Symbolen: Icons im Dashboard und in der
   Statuszeile.
 - npm: Installation und Ausführung der Markdown-Vorschau.
@@ -166,6 +168,10 @@ Alle Suchlisten starten mit `<leader>f`. `<leader>ff` sucht Dateien,
 sucht TODO-Kommentare; `<leader>fY` sucht Treesitter-Symbole. Weitere Picker
 decken unter anderem Git, LSP, Diagnosen, Befehle, Marks, Optionen,
 Quickfix- und Suchverlauf ab. Textsuche verwendet `rg`.
+
+Ein vorangestelltes Apostroph erzwingt eine exakte Suche. Leerzeichen in einer
+zusammenhängenden Zeichenfolge werden mit `\ ` maskiert, zum Beispiel
+`'titel\ text`.
 
 ### Git
 
