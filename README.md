@@ -114,6 +114,12 @@ ID. Im Vault folgt `gf` weiterhin einem Link.
 Weitere Vaults lassen sich in `lua/plugins/obsidian.lua` unter `workspaces`
 eintragen und mit `<leader>ow` auswählen.
 
+Die Plugin-Einstellungen übernehmen Vault-Pfade aus Obsidian: Tagesnotizen
+liegen unter `12 Journal/Daily` und verwenden das Template `Daily Note.md`.
+Vorlagen liegen unter `90 Organize/Templates`, neue Notizen unter
+`01 New Files` und Bildanhänge unter `80 Attachement`. Tagesnotizen verwenden
+das Format `YYYY-MM-DD`; Wochenenden zählen als vorheriger Tag.
+
 ## Python-Debugging
 
 `<leader>db` setzt oder entfernt einen Breakpoint. `<leader>dc` startet
