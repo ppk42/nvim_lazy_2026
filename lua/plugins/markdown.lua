@@ -7,12 +7,5 @@ return {
       vim.g.mkdp_filetypes = { "markdown" }
       vim.g.mkdp_echo_preview_url = 1
     end,
-    keys = {
-      {
-        "<leader>mp",
-        "<cmd>MarkdownPreviewToggle<cr>",
-        desc = "Markdown-Vorschau im Browser umschalten",
-      },
-    },
   },
 }

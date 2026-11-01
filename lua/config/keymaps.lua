@@ -159,6 +159,32 @@ vim.keymap.set("n", "<leader>lT", "<cmd>TSC<cr>", {
 	desc = "TypeScript-Projekt prüfen",
 })
 
+vim.keymap.set("n", "<leader>mf", "<cmd>Obsidian search<cr>", {
+	desc = "Wiki durchsuchen",
+})
+vim.keymap.set("n", "<leader>mn", "<cmd>Obsidian new<cr>", {
+	desc = "Wiki-Notiz erstellen",
+})
+vim.keymap.set("n", "<leader>ms", "<cmd>Obsidian quick_switch<cr>", {
+	desc = "Wiki-Notiz öffnen",
+})
+vim.keymap.set("n", "<leader>mw", "<cmd>Obsidian workspace<cr>", {
+	desc = "Wiki-Workspace wechseln",
+})
+vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", {
+	desc = "Markdown-Vorschau im Browser umschalten",
+})
+
+vim.api.nvim_create_autocmd("User", {
+	pattern = "ObsidianNoteEnter",
+	callback = function()
+		vim.keymap.set("n", "gf", "<cmd>Obsidian follow_link<cr>", {
+			buffer = true,
+			desc = "Wiki-Link folgen",
+		})
+	end,
+})
+
 vim.keymap.set("n", "<leader>br", function()
 	if vim.bo.filetype ~= "bash" and vim.bo.filetype ~= "sh" then
 		vim.notify("Der aktuelle Buffer ist kein Bash-Skript", vim.log.levels.WARN)
