@@ -5,12 +5,13 @@ return {
     build = "cd app && npm install",
     init = function()
       vim.g.mkdp_filetypes = { "markdown" }
+      vim.g.mkdp_echo_preview_url = 1
     end,
     keys = {
       {
         "<leader>mp",
         "<cmd>MarkdownPreviewToggle<cr>",
-        desc = "Markdown-Vorschau umschalten",
+        desc = "Markdown-Vorschau im Browser umschalten",
       },
     },
   },

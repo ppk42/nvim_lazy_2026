@@ -459,7 +459,7 @@ function M.attach_lsp(buf)
 	map("n", "<leader>lgd", vim.lsp.buf.definition, "Zur Definition springen")
 	map("n", "<leader>lgr", vim.lsp.buf.references, "Referenzen anzeigen")
 	map("n", "<leader>lr", vim.lsp.buf.rename, "Symbol umbenennen")
-	map({ "n", "x" }, "<leader>lgra", vim.lsp.buf.code_action, "Code-Aktionen anzeigen")
+	map({ "n", "x" }, "<leader>lga", vim.lsp.buf.code_action, "Code-Aktionen anzeigen")
 	map("n", "<leader>lK", vim.lsp.buf.hover, "Symbolinformationen anzeigen")
 	map("n", "<leader>ldz", function()
 		vim.diagnostic.open_float({

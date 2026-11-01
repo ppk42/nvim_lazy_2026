@@ -31,6 +31,7 @@ dokumentiert.
 - `tsc.nvim`: TypeScript-Projektprüfungen mit `<leader>lT`.
 - `package-info.nvim`: Versionsinformationen und Aktionen in `package.json`.
 - `markdown-preview.nvim`: Markdown-Dateien im Browser anzeigen.
+- `obsidian.nvim`: Obsidian-Vaults als Markdown-Wikis verwalten.
 - `conform.nvim`: Markdown, HTML, CSS und Bash beim Speichern formatieren.
 - `nvim-lint`: Bash-Dateien mit ShellCheck prüfen.
 - `heirline.nvim` und `nvim-web-devicons`: Status- und Tab-Leiste.
@@ -82,12 +83,23 @@ Zeilennummern sind aktiviert.
 Mason installiert `marksman` für Markdown, `html` für HTML5, `cssls` für CSS
 und `bashls` für Bash. Die Server verwenden die vorhandene LSP-
 Vervollständigung und Diagnoseanzeige. Markdown wird auf Deutsch und Englisch
-auf Rechtschreibung geprüft; `<leader>mp` schaltet die Browser-Vorschau um.
+auf Rechtschreibung geprüft; `<leader>mp` öffnet oder schließt die
+Browser-Vorschau und zeigt ihre lokale URL an.
 
 Beim Speichern formatieren Prettier Markdown, HTML und CSS. `shfmt` formatiert
 Bash mit zwei Leerzeichen Einrückung. ShellCheck zeigt Bash-Diagnosen nach dem
 Öffnen und Speichern. `<leader>br` führt die gespeicherte Bash-Datei in einem
 schwebenden Terminal aus.
+
+## Obsidian-Wiki
+
+`obsidian.nvim` verwendet `/home/pkiefer/11_Notes/obsidian/DAFIS` als Workspace
+`DAFIS`. `<leader>mn` erstellt eine Notiz, `<leader>ms` öffnet eine per Namen
+ausgewählte Notiz, `<leader>mf` durchsucht den Vault und `<leader>mw` wechselt
+den Workspace. Mit `gf` auf einem Markdown-Link wird diesem gefolgt.
+Weitere Vaults lassen sich in `lua/plugins/obsidian.lua` unter `workspaces`
+eintragen und anschließend über `<leader>mw` auswählen. Der Pfad des
+eingetragenen Workspaces kann dort jederzeit angepasst werden.
 
 ## Python-Debugging
 
