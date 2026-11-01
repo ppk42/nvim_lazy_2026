@@ -159,6 +159,28 @@ vim.keymap.set("n", "<leader>lT", "<cmd>TSC<cr>", {
 	desc = "TypeScript-Projekt prüfen",
 })
 
+vim.keymap.set("n", "<leader>br", function()
+	if vim.bo.filetype ~= "bash" and vim.bo.filetype ~= "sh" then
+		vim.notify("Der aktuelle Buffer ist kein Bash-Skript", vim.log.levels.WARN)
+		return
+	end
+
+	local path = vim.api.nvim_buf_get_name(0)
+	if path == "" then
+		vim.notify("Bitte Bash-Datei zuerst speichern", vim.log.levels.WARN)
+		return
+	end
+
+	local Terminal = require("toggleterm.terminal").Terminal
+	Terminal:new({
+		cmd = "bash " .. vim.fn.shellescape(path),
+		direction = "float",
+		close_on_exit = false,
+	}):toggle()
+end, {
+	desc = "Bash-Datei ausführen",
+})
+
 vim.keymap.set("n", "<leader>db", function()
 	require("dap").toggle_breakpoint()
 end, {

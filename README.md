@@ -30,6 +30,9 @@ dokumentiert.
   werden.
 - `tsc.nvim`: TypeScript-Projektprüfungen mit `<leader>lT`.
 - `package-info.nvim`: Versionsinformationen und Aktionen in `package.json`.
+- `markdown-preview.nvim`: Markdown-Dateien im Browser anzeigen.
+- `conform.nvim`: Markdown, HTML, CSS und Bash beim Speichern formatieren.
+- `nvim-lint`: Bash-Dateien mit ShellCheck prüfen.
 - `heirline.nvim` und `nvim-web-devicons`: Status- und Tab-Leiste.
 
 ### Yazi
@@ -74,6 +77,18 @@ Quickfix-Liste. `<CR>` springt zur gewählten Stelle und schließt die Liste.
 `<leader>lgra` bietet an der Fehlerstelle Korrekturen an. Relative
 Zeilennummern sind aktiviert.
 
+## Markdown, HTML, CSS und Bash
+
+Mason installiert `marksman` für Markdown, `html` für HTML5, `cssls` für CSS
+und `bashls` für Bash. Die Server verwenden die vorhandene LSP-
+Vervollständigung und Diagnoseanzeige. Markdown wird auf Deutsch und Englisch
+auf Rechtschreibung geprüft; `<leader>mp` schaltet die Browser-Vorschau um.
+
+Beim Speichern formatieren Prettier Markdown, HTML und CSS. `shfmt` formatiert
+Bash mit zwei Leerzeichen Einrückung. ShellCheck zeigt Bash-Diagnosen nach dem
+Öffnen und Speichern. `<leader>br` führt die gespeicherte Bash-Datei in einem
+schwebenden Terminal aus.
+
 ## Python-Debugging
 
 `<leader>db` setzt oder entfernt einen Breakpoint. `<leader>dc` startet
@@ -116,6 +131,7 @@ Python-Debugging. Mason installiert `js-debug-adapter` automatisch.
 - unzip: Entpacken von Sprachservern durch Mason.
 - Eine Schrift mit Nerd-Font-Symbolen: Icons im Dashboard und in der
   Statuszeile.
+- npm: Installation und Ausführung der Markdown-Vorschau.
 - Yazi: Dateibrowser für `yazi.nvim`.
 - Ein Öffner für `vim.ui.open()`: unter Linux `xdg-open`; je nach Umgebung
   sind auch `wslview`, `explorer.exe` oder `lemonade` möglich.

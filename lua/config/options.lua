@@ -13,3 +13,11 @@ vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
 vim.opt.showtabline = 2
 vim.opt.laststatus = 3
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown",
+	callback = function()
+		vim.opt_local.spell = true
+		vim.opt_local.spelllang = { "de", "en" }
+	end,
+})

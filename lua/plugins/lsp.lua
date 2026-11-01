@@ -61,6 +61,18 @@ return {
         },
       },
     })
+    vim.lsp.config("marksman", {
+      capabilities = capabilities,
+    })
+    vim.lsp.config("html", {
+      capabilities = capabilities,
+    })
+    vim.lsp.config("cssls", {
+      capabilities = capabilities,
+    })
+    vim.lsp.config("bashls", {
+      capabilities = capabilities,
+    })
 
     vim.diagnostic.config({
       signs = {
@@ -89,11 +101,19 @@ return {
         "pyright",
         "lua_ls",
         "vtsls",
+        "marksman",
+        "html",
+        "cssls",
+        "bashls",
       },
       automatic_enable = {
         "pyright",
         "lua_ls",
         "vtsls",
+        "marksman",
+        "html",
+        "cssls",
+        "bashls",
       },
     })
   end,
