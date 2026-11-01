@@ -1,6 +1,12 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
+vim.keymap.set({ "n", "x" }, "<leader>lf", function()
+	require("conform").format()
+end, {
+	desc = "Code formatieren",
+})
+
 local function map_telescope(lhs, picker, desc, mode)
 	vim.keymap.set(mode or "n", lhs, function()
 		require("telescope.builtin")[picker]()
@@ -466,7 +472,15 @@ local M = {
 
 function M.completion(cmp, luasnip)
 	return {
-		["<C-Space>"] = cmp.mapping.complete(),
+		["<C-Space>"] = cmp.mapping(function()
+			if cmp.visible() then
+				cmp.select_next_item({
+					behavior = cmp.SelectBehavior.Select,
+				})
+			else
+				cmp.complete()
+			end
+		end, { "i", "s" }),
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item({
@@ -516,6 +530,7 @@ function M.attach_lsp(buf)
 	map("n", "<leader>lr", vim.lsp.buf.rename, "Symbol umbenennen")
 	map({ "n", "x" }, "<leader>lga", vim.lsp.buf.code_action, "Code-Aktionen anzeigen")
 	map("n", "<leader>lK", vim.lsp.buf.hover, "Symbolinformationen anzeigen")
+	map({ "n", "i" }, "<C-k>", vim.lsp.buf.signature_help, "Funktionssignatur anzeigen")
 	map("n", "<leader>ldz", function()
 		vim.diagnostic.open_float({
 			scope = "line",

@@ -30,6 +30,7 @@ return {
     cmp.setup({
       completion = {
         autocomplete = false,
+        completeopt = "menu,menuone,noinsert",
       },
       preselect = cmp.PreselectMode.None,
       confirmation = {

@@ -33,7 +33,7 @@ dokumentiert.
 - `package-info.nvim`: Versionsinformationen und Aktionen in `package.json`.
 - `markdown-preview.nvim`: Markdown-Dateien im Browser anzeigen.
 - `obsidian.nvim`: Obsidian-Vaults als Markdown-Wikis verwalten.
-- `conform.nvim`: Markdown, HTML, CSS und Bash beim Speichern formatieren.
+- `conform.nvim`: Code beim Speichern und mit `<leader>lf` formatieren.
 - `nvim-lint`: Bash-Dateien mit ShellCheck prüfen.
 - `heirline.nvim` und `nvim-web-devicons`: Status- und Tab-Leiste.
 
@@ -58,16 +58,25 @@ ungespeicherten Änderungen nach. Rechts stehen die echten Neovim-Tabs
 mit Nummer und Dateinamen ohne Verzeichnispfad. Im Normalmodus wechselt
 `<Tab>` zum nächsten Tab; `<C-I>` geht in der Sprungliste vorwärts.
 
+Über jedem Dateifenster steht der vollständige Pfad seines Buffers.
+Bei wenig Platz wird der Pfad links gekürzt. Unbenannte Buffer zeigen
+keinen Pfad; Spezialbuffer wie Terminals erhalten keine Pfadleiste.
+
 ## LSP, Vervollständigung und Snippets
 
 Mason installiert `pyright` für Python, `lua_ls` für Lua und `vtsls` für
 JavaScript und TypeScript beim ersten Öffnen einer Datei automatisch.
 VTSLS aktiviert Inlay-Hints und aktualisiert Imports nach Datei-Umzügen.
-Vorschläge erscheinen nur nach
-`<C-Space>`.
-Mit `<Tab>` und `<S-Tab>` wird ein Vorschlag gewählt oder zwischen
+`<C-Space>` öffnet die Vorschlagsliste und wählt den ersten Eintrag aus.
+Erneutes Drücken wählt den nächsten Eintrag. Vorschläge erscheinen nur
+auf diesen manuellen Aufruf hin.
+Mit `<Tab>` und `<S-Tab>` wird vorwärts und rückwärts gewählt oder zwischen
 Snippet-Platzhaltern gewechselt. `<CR>` übernimmt nur einen gewählten
 Vorschlag. Ohne Auswahl schließt es die Vorschlagsliste.
+
+`<C-k>` zeigt im Normal- und Einfügemodus die Signatur des Funktionsaufrufs
+unter dem Cursor und, sofern der Sprachserver es unterstützt, den aktiven
+Parameter. Die Signaturhilfe wird nur manuell geöffnet.
 
 `<leader>lgd` springt zur Definition. `<leader>lgrr` zeigt Referenzen,
 `<leader>lgrn` benennt um, `<leader>lgra` öffnet Code-Aktionen und
@@ -78,6 +87,23 @@ sichtbar. `<leader>le` zeigt die Diagnosen der aktuellen Datei in der
 Quickfix-Liste. `<CR>` springt zur gewählten Stelle und schließt die Liste.
 `<leader>lgra` bietet an der Fehlerstelle Korrekturen an. Relative
 Zeilennummern sind aktiviert.
+
+## Formatierung
+
+Beim Speichern laufen die für den Dateityp eingerichteten Formatter
+automatisch. Im Normalmodus formatiert `<leader>lf` (Leertaste, `l`, `f`)
+die ganze Datei, im Visual-Modus die Auswahl.
+
+- Python: Black.
+- Lua: StyLua.
+- JavaScript, TypeScript, JSX, TSX, JSON, JSONC, YAML, Markdown, HTML und CSS:
+  Prettier.
+- Bash und Shell: shfmt mit zwei Leerzeichen Einrückung.
+
+Mason installiert die Formatter automatisch. Projekteinstellungen werden
+von den jeweiligen Werkzeugen berücksichtigt. Für andere Dateitypen wird
+ein angeschlossener LSP-Server verwendet, sofern er Formatierung anbietet.
+`:ConformInfo` zeigt die zugeordneten und verfügbaren Formatter.
 
 ## Markdown, HTML, CSS und Bash
 
@@ -113,6 +139,7 @@ Inhaltsverzeichnis (`oT`) und Fußnoten (`oF`). `<leader>oC` prüft den Vault,
 ID. Im Vault folgt `gf` weiterhin einem Link.
 Weitere Vaults lassen sich in `lua/plugins/obsidian.lua` unter `workspaces`
 eintragen und mit `<leader>ow` auswählen.
+Markdown-Quelltext bleibt vollständig sichtbar; Obsidian-Concealing ist aus.
 
 Die Plugin-Einstellungen übernehmen Vault-Pfade aus Obsidian: Tagesnotizen
 liegen unter `12 Journal/Daily` und verwenden das Template `Daily Note.md`.

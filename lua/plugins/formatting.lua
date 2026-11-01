@@ -9,23 +9,39 @@ return {
         },
       },
       formatters_by_ft = {
+        python = { "black" },
+        lua = { "stylua" },
+        javascript = { "prettier" },
+        javascriptreact = { "prettier" },
+        typescript = { "prettier" },
+        typescriptreact = { "prettier" },
+        json = { "prettier" },
+        jsonc = { "prettier" },
+        yaml = { "prettier" },
         markdown = { "prettier" },
         html = { "prettier" },
         css = { "prettier" },
         bash = { "shfmt" },
         sh = { "shfmt" },
       },
-      format_on_save = {
-        timeout_ms = 1000,
+      default_format_opts = {
+        timeout_ms = 3000,
         lsp_format = "fallback",
       },
+      format_on_save = {},
     },
   },
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     dependencies = { "mason-org/mason.nvim" },
     opts = {
-      ensure_installed = { "prettier", "shfmt", "shellcheck" },
+      ensure_installed = {
+        "black",
+        "stylua",
+        "prettier",
+        "shfmt",
+        "shellcheck",
+      },
     },
   },
 }

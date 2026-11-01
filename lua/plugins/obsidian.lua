@@ -30,6 +30,9 @@ return {
     attachments = {
       folder = "80 Attachement",
     },
+    ui = {
+      enable = false,
+    },
     picker = {
       name = "telescope.nvim",
     },

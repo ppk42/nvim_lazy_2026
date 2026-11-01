@@ -1,6 +1,6 @@
 return {
 	"rebelot/heirline.nvim",
-	event = "VeryLazy",
+	lazy = false,
 	dependencies = {
 		{
 			"nvim-tree/nvim-web-devicons",
@@ -189,6 +189,21 @@ return {
 		}
 
 		require("heirline").setup({
+			opts = {
+				disable_winbar_cb = function(args)
+					return vim.bo[args.buf].buftype ~= ""
+				end,
+			},
+			winbar = {
+				condition = function()
+					return vim.api.nvim_buf_get_name(0) ~= ""
+				end,
+				provider = function()
+					local path = vim.api.nvim_buf_get_name(0):gsub("%%", "%%%%")
+					return "%< " .. path
+				end,
+				hl = "WinBar",
+			},
 			statusline = {
 				hl = "StatusLine",
 				mode,
