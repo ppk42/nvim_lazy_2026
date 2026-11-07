@@ -20,6 +20,7 @@ dokumentiert.
 - `nvim-dap-vscode-js`: Node.js-Debugging für JavaScript und TypeScript.
 - `plenary.nvim`: Abhängigkeit von `yazi.nvim` und `telescope.nvim`.
 - `which-key.nvim`: Zeigt mögliche Folgetasten nach dem Leader an.
+- `nvim-surround`: Klammern, Anführungszeichen und Tags bearbeiten.
 - `lazygit.nvim`: Öffnet die Git-Oberfläche LazyGit mit `<leader>gl`.
 - `gitsigns.nvim`: Zeigt Git-Änderungen am Rand und bietet lokale Aktionen.
 - `mason.nvim`: Installiert externe Sprachserver.
@@ -38,6 +39,20 @@ dokumentiert.
 - `conform.nvim`: Code beim Speichern und mit `<leader>lf` formatieren.
 - `nvim-lint`: Bash-Dateien mit ShellCheck prüfen.
 - `heirline.nvim` und `nvim-web-devicons`: Status- und Tab-Leiste.
+
+### Surround
+
+Im Normalmodus fügt `ys{Bewegung}{Zeichen}` eine Umrandung hinzu,
+`ds{Zeichen}` entfernt sie und `cs{Alt}{Neu}` ersetzt sie. Beispiele:
+
+- `ysiw)`: Das Wort unter dem Cursor mit `(…)` umgeben.
+- `ds"`: Umgebende doppelte Anführungszeichen entfernen.
+- `cs"'`: Doppelte durch einfache Anführungszeichen ersetzen.
+
+Beim Hinzufügen erzeugt `)` Klammern ohne zusätzliche Leerzeichen,
+`(` dagegen mit Leerzeichen innen. Weitere Befehle stehen unter
+`:help nvim-surround.usage` und in der
+[Plugin-Anleitung](https://github.com/kylechui/nvim-surround).
 
 ### Yazi
 
