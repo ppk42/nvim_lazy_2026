@@ -1,0 +1,1 @@
+[{"name":"PG","url":"postgresql://dev@localhost:5432/postgres"},{"name":"PoBu","url":"postgresql://dev@localhost:5432/pobu"}]

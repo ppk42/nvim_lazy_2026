@@ -1,10 +1,15 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
-vim.keymap.set("n", "<leader>Du", "<cmd>DBUIToggle<cr>", {
+vim.keymap.set("n", "<leader>Du", function()
+	require("config.dadbod").refresh()
+	vim.cmd.DBUIToggle()
+end, {
 	desc = "Datenbank-Oberfläche umschalten",
 })
-vim.keymap.set("n", "<leader>Da", "<cmd>DBUIAddConnection<cr>", {
+vim.keymap.set("n", "<leader>Da", function()
+	require("config.dadbod").add()
+end, {
 	desc = "Datenbankverbindung hinzufügen",
 })
 vim.keymap.set("n", "<leader>Df", "<cmd>DBUIFindBuffer<cr>", {
@@ -398,7 +403,6 @@ local M = {
 			mode = { "n", "x" },
 		},
 		{ "<leader>Dq", group = "Abfragen", mode = { "n", "x" } },
-		{ "<leader>Dn", group = "Navigation" },
 		{ "<leader>Dr", group = "Ergebnisse" },
 		{
 			"<leader>d",
@@ -523,31 +527,38 @@ function M.attach_dadbod(buf)
 		map("qr", "<cmd>DBUIRenameBuffer<cr>", "Abfrage umbenennen")
 		map("qi", "<cmd>DBUILastQueryInfo<cr>", "Letzte Abfrage anzeigen")
 	elseif ft == "dbui" then
+		local function sidebar(lhs, rhs, desc)
+			vim.keymap.set("n", lhs, rhs, { buffer = buf, desc = desc })
+		end
 		local actions = {
-			{ "no", "SelectLine", "Eintrag öffnen oder aufklappen" },
-			{ "nv", "SelectLineVsplit", "Eintrag vertikal öffnen" },
-			{ "nd", "DeleteLine", "Eintrag entfernen" },
-			{ "nr", "RenameLine", "Eintrag bearbeiten oder umbenennen" },
-			{ "nR", "Redraw", "Tabellenliste aktualisieren" },
-			{ "ni", "ToggleDetails", "Verbindungsherkunft anzeigen" },
-			{ "nq", "Quit", "Seitenleiste schließen" },
-			{ "nj", "GotoNextSibling", "Nächster Eintrag gleicher Ebene" },
-			{ "nk", "GotoPrevSibling", "Vorheriger Eintrag gleicher Ebene" },
-			{ "nf", "GotoFirstSibling", "Erster Eintrag gleicher Ebene" },
-			{ "nl", "GotoLastSibling", "Letzter Eintrag gleicher Ebene" },
-			{ "np", "GotoParentNode", "Übergeordneter Eintrag" },
-			{ "nc", "GotoChildNode", "Untergeordneter Eintrag" },
+			{ "o", "SelectLine", "Eintrag öffnen oder aufklappen" },
+			{ "<CR>", "SelectLine", "Eintrag öffnen oder aufklappen" },
+			{ "<2-LeftMouse>", "SelectLine", "Eintrag öffnen oder aufklappen" },
+			{ "S", "SelectLineVsplit", "Eintrag vertikal öffnen" },
+			{ "R", "Redraw", "Tabellenliste aktualisieren" },
+			{ "H", "ToggleDetails", "Verbindungsherkunft anzeigen" },
+			{ "q", "Quit", "Seitenleiste schließen" },
+			{ "J", "GotoNextSibling", "Nächster Eintrag gleicher Ebene" },
+			{ "K", "GotoPrevSibling", "Vorheriger Eintrag gleicher Ebene" },
+			{ "<C-k>", "GotoFirstSibling", "Erster Eintrag gleicher Ebene" },
+			{ "<C-j>", "GotoLastSibling", "Letzter Eintrag gleicher Ebene" },
+			{ "<C-p>", "GotoParentNode", "Übergeordneter Eintrag" },
+			{ "<C-n>", "GotoChildNode", "Untergeordneter Eintrag" },
 		}
 		for _, action in ipairs(actions) do
-			plug(action[1], action[2], action[3])
+			sidebar(action[1], "<Plug>(DBUI_" .. action[2] .. ")", action[3])
 		end
-		for _, mapping in ipairs(vim.api.nvim_buf_get_keymap(buf, "n")) do
-			if mapping.lhs == "?" then
-				remove("n", "?")
-			end
-		end
-		map("nh", function()
-			require("which-key").show({ keys = vim.g.mapleader .. "Dn" })
+		sidebar("A", function()
+			require("config.dadbod").add()
+		end, "Datenbankverbindung hinzufügen")
+		sidebar("d", function()
+			require("config.dadbod").manage("delete")
+		end, "Eintrag entfernen")
+		sidebar("r", function()
+			require("config.dadbod").manage("edit")
+		end, "Eintrag bearbeiten oder umbenennen")
+		sidebar("?", function()
+			require("which-key").show({ global = false })
 		end, "Navigationshilfe anzeigen")
 	elseif ft == "dbout" then
 		for _, mapping in ipairs(vim.api.nvim_buf_get_keymap(buf, "n")) do

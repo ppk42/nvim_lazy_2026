@@ -19,6 +19,7 @@ return {
     vim.g.db_ui_execute_on_save = 0
     vim.g.db_ui_auto_execute_table_helpers = 0
     vim.g.db_ui_save_location = vim.fn.stdpath("data") .. "/dadbod-ui"
+    require("config.dadbod").setup()
   end,
   config = function()
     local group = vim.api.nvim_create_augroup("DadbodKeymaps", { clear = true })
@@ -39,6 +40,7 @@ return {
       group = group,
       pattern = "DBUIOpened",
       callback = function()
+        require("config.dadbod").refresh()
         require("config.keymaps").attach_dadbod(vim.api.nvim_get_current_buf())
       end,
     })

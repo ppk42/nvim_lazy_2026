@@ -94,17 +94,30 @@ Zeilennummern sind aktiviert.
 
 DadBod unterstützt PostgreSQL und SQLite über die Programme `psql` und
 `sqlite3`. `<leader>Du` öffnet oder schließt die Datenbank-Oberfläche.
-`<leader>Da` fügt eine Verbindung hinzu. Beispiele für Verbindungs-URLs:
+`<leader>Da` fragt nach dem Speicherort `Global` oder `Projekt` und fügt
+eine Verbindung hinzu. Beispiele für Verbindungs-URLs:
 
 - PostgreSQL: `postgresql://benutzer@localhost:5432/datenbank`
 - SQLite: `sqlite:/absoluter/pfad/datenbank.sqlite`
 
-Verbindungen und gespeicherte Abfragen liegen unter
+Globale Verbindungen und gespeicherte Abfragen liegen unter
 `stdpath("data")/dadbod-ui`, normalerweise `~/.local/share/nvim/dadbod-ui`.
 PostgreSQL-Passwörter können über `~/.pgpass` bereitgestellt werden.
 
-Alle DadBod-Aktionen liegen unter `<leader>D`. Die Plugin-Vorbelegungen sind
-deaktiviert. Which-Key zeigt die Aktionen passend zum aktuellen Bereich.
+Projektverbindungen liegen zusätzlich unter `.dadbod/connections.json`.
+Das Projekt wird vom aktuellen Arbeitsverzeichnis aus über das nächste
+übergeordnete `.git` oder `.dadbod` erkannt. Ohne einen solchen Ordner gilt
+das Arbeitsverzeichnis als Projektwurzel. Ein Wechsel mit `:cd` lädt die
+Verbindungen des neuen Projekts. Globale Verbindungen bleiben verfügbar.
+Die Seitenleiste zeigt den Verbindungsnamen ohne Projektpfad an.
+In der Seitenleiste bearbeitet `r` und entfernt `d` die gewählte Verbindung
+an ihrem jeweiligen Speicherort. `:DBUIAddConnection` bleibt global.
+Das Speichern der Verbindungsdatei und Öffnen der Oberfläche lädt Änderungen
+neu. Verbindungs-URLs werden als Klartext gespeichert.
+
+Globale Aufrufe, Abfrage- und Ergebnisaktionen liegen unter `<leader>D`.
+Die Seitenleiste hat eigene lokale Navigationstasten ohne Leader-Präfix.
+Which-Key zeigt die Aktionen passend zum aktuellen Bereich.
 `<leader>Df` ordnet eine bereits geöffnete SQL-Datei einer Verbindung zu.
 
 | Gruppe | Taste nach `<leader>D` | Aktion |
@@ -113,19 +126,26 @@ deaktiviert. Which-Key zeigt die Aktionen passend zum aktuellen Bereich.
 | Abfragen | `qe` | Buffer ausführen, im Visual-Modus nur die Auswahl |
 | Abfragen | `qs` / `qp` | Abfrage speichern / Bind-Parameter bearbeiten |
 | Abfragen | `qr` / `qi` | Abfrage umbenennen / letzte Abfrage anzeigen |
-| Navigation | `no` / `nv` | Eintrag öffnen / im vertikalen Split öffnen |
-| Navigation | `nd` / `nr` | Eintrag entfernen / bearbeiten oder umbenennen |
-| Navigation | `nR` / `ni` | Tabellenliste aktualisieren / Herkunft anzeigen |
-| Navigation | `nj` / `nk` | Nächster / vorheriger Eintrag gleicher Ebene |
-| Navigation | `nf` / `nl` | Erster / letzter Eintrag gleicher Ebene |
-| Navigation | `np` / `nc` | Übergeordneter / untergeordneter Eintrag |
-| Navigation | `nq` / `nh` | Seitenleiste schließen / Navigationshilfe |
 | Ergebnisse | `rr` / `re` | Abfrage erneut ausführen / Befehlszeile öffnen |
 | Ergebnisse | `rc` / `rq` | Abfrage abbrechen / Ergebnis schließen |
 | Ergebnisse | `rf` | Fremdschlüssel abfragen (PostgreSQL) |
 | Ergebnisse | `rv` / `ry` | Zellwert auswählen / kopieren |
 | Ergebnisse | `rh` | Spaltenüberschriften kopieren |
 | Ergebnisse | `rl` | Layout umschalten und erneut abfragen (PostgreSQL) |
+
+Nur in der Seitenleiste gelten diese Tasten:
+
+| Taste | Aktion |
+| --- | --- |
+| `<CR>` / `o` / Doppelklick | Eintrag öffnen oder aufklappen |
+| `S` | Eintrag im vertikalen Split öffnen |
+| `A` | Globale oder projektlokale Verbindung hinzufügen |
+| `d` / `r` | Eintrag entfernen / bearbeiten oder umbenennen |
+| `R` / `H` | Tabellenliste aktualisieren / Verbindungsherkunft anzeigen |
+| `J` / `K` | Nächster / vorheriger Eintrag gleicher Ebene |
+| `<C-j>` / `<C-k>` | Letzter / erster Eintrag gleicher Ebene |
+| `<C-p>` / `<C-n>` | Übergeordneter / untergeordneter Eintrag |
+| `q` / `?` | Seitenleiste schließen / lokale Tasten anzeigen |
 
 Unter einer Verbindung öffnet `New query` einen SQL-Buffer. Speichern und
 Öffnen von Tabellenabfragen führen kein SQL aus. Die Ergebnisaktionen `rr`,
