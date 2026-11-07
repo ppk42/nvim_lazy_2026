@@ -397,6 +397,9 @@ local M = {
 			group = "Datenbanken",
 			mode = { "n", "x" },
 		},
+		{ "<leader>Dq", group = "Abfragen", mode = { "n", "x" } },
+		{ "<leader>Dn", group = "Navigation" },
+		{ "<leader>Dr", group = "Ergebnisse" },
 		{
 			"<leader>d",
 			group = "Debuggen",
@@ -484,6 +487,106 @@ local M = {
 		},
 	},
 }
+
+function M.attach_dadbod(buf)
+	local ft = vim.bo[buf].filetype
+	if ft ~= "sql" and ft ~= "dbui" and ft ~= "dbout" then
+		return
+	end
+
+	local function map(lhs, rhs, desc, mode)
+		vim.keymap.set(mode or "n", "<leader>D" .. lhs, rhs, {
+			buffer = buf,
+			desc = desc,
+		})
+	end
+
+	local function plug(lhs, action, desc, mode)
+		map(lhs, "<Plug>(DBUI_" .. action .. ")", desc, mode)
+	end
+
+	local function remove(mode, lhs)
+		pcall(vim.keymap.del, mode, lhs, { buffer = buf })
+	end
+
+	if ft == "sql" then
+		if not vim.b[buf].dbui_db_key_name then
+			return
+		end
+		plug("qe", "ExecuteQuery", "Abfrage ausführen", { "n", "x" })
+		for _, mapping in ipairs(vim.api.nvim_buf_get_keymap(buf, "n")) do
+			if mapping.lhs == "<Plug>(DBUI_SaveQuery)" then
+				plug("qs", "SaveQuery", "Abfrage speichern")
+			end
+		end
+		plug("qp", "EditBindParameters", "Bind-Parameter bearbeiten")
+		map("qr", "<cmd>DBUIRenameBuffer<cr>", "Abfrage umbenennen")
+		map("qi", "<cmd>DBUILastQueryInfo<cr>", "Letzte Abfrage anzeigen")
+	elseif ft == "dbui" then
+		local actions = {
+			{ "no", "SelectLine", "Eintrag öffnen oder aufklappen" },
+			{ "nv", "SelectLineVsplit", "Eintrag vertikal öffnen" },
+			{ "nd", "DeleteLine", "Eintrag entfernen" },
+			{ "nr", "RenameLine", "Eintrag bearbeiten oder umbenennen" },
+			{ "nR", "Redraw", "Tabellenliste aktualisieren" },
+			{ "ni", "ToggleDetails", "Verbindungsherkunft anzeigen" },
+			{ "nq", "Quit", "Seitenleiste schließen" },
+			{ "nj", "GotoNextSibling", "Nächster Eintrag gleicher Ebene" },
+			{ "nk", "GotoPrevSibling", "Vorheriger Eintrag gleicher Ebene" },
+			{ "nf", "GotoFirstSibling", "Erster Eintrag gleicher Ebene" },
+			{ "nl", "GotoLastSibling", "Letzter Eintrag gleicher Ebene" },
+			{ "np", "GotoParentNode", "Übergeordneter Eintrag" },
+			{ "nc", "GotoChildNode", "Untergeordneter Eintrag" },
+		}
+		for _, action in ipairs(actions) do
+			plug(action[1], action[2], action[3])
+		end
+		for _, mapping in ipairs(vim.api.nvim_buf_get_keymap(buf, "n")) do
+			if mapping.lhs == "?" then
+				remove("n", "?")
+			end
+		end
+		map("nh", function()
+			require("which-key").show({ keys = vim.g.mapleader .. "Dn" })
+		end, "Navigationshilfe anzeigen")
+	elseif ft == "dbout" then
+		for _, mapping in ipairs(vim.api.nvim_buf_get_keymap(buf, "n")) do
+			if mapping.lhs == "R" then
+				local reload = mapping.rhs:match("(<SNR>%d+_reload)%(%)")
+				if reload then
+					map("rr", function()
+						vim.fn[reload]()
+					end, "Abfrage erneut ausführen")
+					map("rl", function()
+						vim.keymap.set("n", "R", mapping.rhs, { buffer = buf })
+						local ok, err = pcall(function()
+							vim.fn["db_ui#dbout#toggle_layout"]()
+						end)
+						remove("n", "R")
+						if not ok then
+							error(err)
+						end
+					end, "Ergebnisansicht ändern und Abfrage erneut ausführen")
+				end
+			elseif mapping.lhs == "r" then
+				map("re", mapping.rhs, "Abfrage in Befehlszeile bearbeiten")
+			end
+		end
+		for _, lhs in ipairs({ "R", "r", "q", "gq", "<C-C>" }) do
+			remove("n", lhs)
+		end
+		remove("o", "ic")
+		map("rc", "<cmd>call db#cancel()<cr>", "Abfrage abbrechen")
+		map("rq", "<cmd>bdelete<cr>", "Ergebnis schließen")
+		plug("rf", "JumpToForeignKey", "Fremdschlüssel abfragen")
+		plug("rv", "YankCellValue", "Zellwert auswählen")
+		plug("rh", "YankHeader", "Spaltenüberschriften kopieren")
+		map("ry", function()
+			vim.fn["db_ui#dbout#get_cell_value"]()
+			vim.cmd('normal! y')
+		end, "Zellwert kopieren")
+	end
+end
 
 function M.completion(cmp, luasnip)
 	return {
