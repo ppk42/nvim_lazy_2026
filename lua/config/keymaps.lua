@@ -1,6 +1,16 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
+vim.keymap.set("n", "<leader>Du", "<cmd>DBUIToggle<cr>", {
+	desc = "Datenbank-Oberfläche umschalten",
+})
+vim.keymap.set("n", "<leader>Da", "<cmd>DBUIAddConnection<cr>", {
+	desc = "Datenbankverbindung hinzufügen",
+})
+vim.keymap.set("n", "<leader>Df", "<cmd>DBUIFindBuffer<cr>", {
+	desc = "SQL-Buffer einer Datenbank zuordnen",
+})
+
 vim.keymap.set({ "n", "x" }, "<leader>lf", function()
 	require("conform").format()
 end, {
@@ -382,6 +392,11 @@ vim.api.nvim_create_autocmd("FileType", {
 
 local M = {
 	which_key = {
+		{
+			"<leader>D",
+			group = "Datenbanken",
+			mode = { "n", "x" },
+		},
 		{
 			"<leader>d",
 			group = "Debuggen",

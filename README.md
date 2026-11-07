@@ -26,6 +26,8 @@ dokumentiert.
 - `mason-lspconfig.nvim`: Verbindet Mason mit Neovims LSP.
 - `nvim-lspconfig`: Stellt die LSP-Konfigurationen bereit.
 - `nvim-cmp` und `cmp-nvim-lsp`: Manuell aufgerufene LSP-Vervollständigung.
+- `vim-dadbod`, `vim-dadbod-ui` und `vim-dadbod-completion`: Datenbanken
+  verwalten, SQL ausführen und Tabellen sowie Spalten vervollständigen.
 - `LuaSnip`, `cmp_luasnip` und `friendly-snippets`: Snippets für Python,
   Lua, JavaScript, TypeScript und React, die nur nach Auswahl eingefügt
   werden.
@@ -87,6 +89,33 @@ sichtbar. `<leader>le` zeigt die Diagnosen der aktuellen Datei in der
 Quickfix-Liste. `<CR>` springt zur gewählten Stelle und schließt die Liste.
 `<leader>lgra` bietet an der Fehlerstelle Korrekturen an. Relative
 Zeilennummern sind aktiviert.
+
+## Datenbanken mit DadBod
+
+DadBod unterstützt PostgreSQL und SQLite über die Programme `psql` und
+`sqlite3`. `<leader>Du` öffnet oder schließt die Datenbank-Oberfläche.
+`<leader>Da` fügt eine Verbindung hinzu. Beispiele für Verbindungs-URLs:
+
+- PostgreSQL: `postgresql://benutzer@localhost:5432/datenbank`
+- SQLite: `sqlite:/absoluter/pfad/datenbank.sqlite`
+
+Verbindungen und gespeicherte Abfragen liegen unter
+`stdpath("data")/dadbod-ui`, normalerweise `~/.local/share/nvim/dadbod-ui`.
+PostgreSQL-Passwörter können über `~/.pgpass` bereitgestellt werden.
+
+In der Oberfläche öffnet `<CR>` einen Eintrag. Unter einer Verbindung lässt
+sich über `New query` ein SQL-Buffer öffnen. `<leader>Df` ordnet eine bereits
+geöffnete SQL-Datei einer Verbindung zu. In SQL-Buffern führt `<leader>S`
+den gesamten Inhalt aus, im Visual-Modus nur die Auswahl. Speichern und das
+Öffnen von Tabellenabfragen führen kein SQL aus. `<leader>W` speichert eine
+Abfrage für die spätere Verwendung.
+`<C-Space>` bietet Tabellen- und Spaltennamen der verbundenen Datenbank an.
+`?` zeigt die Hilfe der Oberfläche.
+
+Weitere Details stehen in der
+[DadBod-UI-Dokumentation](https://github.com/kristijanhusak/vim-dadbod-ui)
+und bei
+[DadBod Completion](https://github.com/kristijanhusak/vim-dadbod-completion).
 
 ## Formatierung
 
@@ -182,6 +211,8 @@ Python-Debugging. Mason installiert `js-debug-adapter` automatisch.
 
 - Neovim mit LuaJIT: Editor und Ausführung der Lua-Konfiguration.
 - Git: Installation und Aktualisierung der Plugins mit `lazy.nvim`.
+- PostgreSQL-Client (`psql`) und SQLite (`sqlite3`): Datenbankzugriffe mit
+  DadBod. Spaltenvervollständigung benötigt SQLite ab Version 3.37.
 - LazyGit: Das Programm `lazygit` muss im System-PATH verfügbar sein.
 - ripgrep (`rg`): schnelle Textsuche mit Neovim.
 - curl: Netzwerkzugriffe über `vim.net.request()`.

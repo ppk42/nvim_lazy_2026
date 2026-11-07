@@ -3,6 +3,10 @@ return {
   event = "InsertEnter",
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
+    {
+      "kristijanhusak/vim-dadbod-completion",
+      dependencies = { "tpope/vim-dadbod" },
+    },
     "saadparwaiz1/cmp_luasnip",
     {
       "L3MON4D3/LuaSnip",
@@ -51,6 +55,13 @@ return {
         {
           name = "luasnip",
         },
+      },
+    })
+
+    cmp.setup.filetype("sql", {
+      sources = {
+        { name = "vim-dadbod-completion" },
+        { name = "luasnip" },
       },
     })
   end,
